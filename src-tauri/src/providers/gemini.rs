@@ -126,7 +126,7 @@ pub async fn transcribe_verbose(
     
     // API key goes in URL query param
     let url = format!(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key={}",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key={}",
         urlencoding::encode(&api_key)
     );
     
@@ -234,7 +234,7 @@ pub async fn rewrite_text(
     };
 
     // If using the 3.1 flash lite model, apply the MINIMAL thinking level
-    if model == "gemini-3.1-flash-lite-preview" {
+    if model == "gemini-3.1-flash-lite" {
         request_body.generation_config = Some(GenerationConfig {
             thinking_config: ThinkingConfig {
                 thinking_level: "MINIMAL".to_string(),
