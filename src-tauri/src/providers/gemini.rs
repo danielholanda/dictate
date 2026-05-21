@@ -222,7 +222,7 @@ pub async fn rewrite_text(
     let client = get_http_client();
     
     // Construct the request body
-    let mut request_body = ChatRequest {
+    let request_body = ChatRequest {
         contents: vec![ChatContent {
             role: "user".to_string(),
             parts: vec![
@@ -230,17 +230,12 @@ pub async fn rewrite_text(
                 ChatPart { text },
             ],
         }],
-        generation_config: None,
-    };
-
-    // If using the 3.1 flash lite model, apply the MINIMAL thinking level
-    if model == "gemini-3.1-flash-lite" {
-        request_body.generation_config = Some(GenerationConfig {
+        generation_config: Some(GenerationConfig {
             thinking_config: ThinkingConfig {
                 thinking_level: "MINIMAL".to_string(),
             },
-        });
-    }
+        }),
+    };
     
     // API key goes in URL query param
     let url = format!(

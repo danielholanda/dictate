@@ -17,7 +17,7 @@ If Dictate improves your workflow, please consider supporting ongoing AI members
 *   **Desktop Dictation:** Record your voice and have it transcribed into text.
 *   **Seamless Text Insertion:** Automatically pastes or types the transcribed text into your active application.
 *   **Standalone Windows Executable:** Packaged as a portable `.exe` for easy distribution and use.
-*   **Interactive Settings:** Configure API keys, transcription services (Deepgram, Cartesia, Groq, Gemini, Mistral, SambaNova, Fireworks), text rewrite provider and mode (Groq, Gemini, Mistral, SambaNova, Fireworks), transcription language, and text insertion modes through a dedicated settings window.
+*   **Interactive Settings:** Configure API keys, transcription services (Deepgram, Cartesia, Groq, Gemini, Mistral, SambaNova, Fireworks), text rewrite provider and mode (Groq, Gemini, Mistral, SambaNova, Fireworks, Inception), transcription language, and text insertion modes through a dedicated settings window.
 *   **Help & Support:** Quick access to the project's GitHub page via a help button.
 *   **Global Keyboard Shortcuts:** System-wide shortcuts for recording, text rewrite, compact mode, and more (see [Keyboard Shortcuts](#keyboard-shortcuts) section).
 *   **Text Rewrite:** Select any text in any app and click the sparkle button (or press `Ctrl+Shift+R`) to rewrite it. **Smart Selection Awareness:** If text is selected, it rewrites only that portion; if nothing is selected, it automatically selects all text in the focused area and rewrites the entire content. Choose from Grammar Correction, Professional Tone, Polite Tone, Casual Tone, or Structured & Organized. **Fully customizable prompts:** Edit the instructions for any mode directly in settings to tailor the AI's behavior to your exact needs.
@@ -41,7 +41,7 @@ If Dictate improves your workflow, please consider supporting ongoing AI members
 *   **Multilingual Understanding:** Pick a default transcription language in settings. Providers that accept language hints receive it automatically; leaving the selector on `Multilingual` falls back to each provider's auto-detect mode.
     * Deepgram streams with `language=multi`.
     * Groq Whisper (whisper-large-v3-turbo) auto-detects language.
-    * Gemini Flash Lite handles multilingual audio.
+    * Gemini 3.1 Flash Lite handles multilingual audio.
     * Mistral Voxtral receives the selected language when provided.
     * SambaNova Whisper receives the selected language when provided.
 *   **Word Correction:** Automatically correct frequent mis-transcriptions (e.g., "chat gpt" -> "ChatGPT") using a customizable dictionary. Supports fuzzy matching (configurable threshold) to catch slight variations in spelling or spacing. Manage your custom word list easily in Settings.
@@ -126,11 +126,11 @@ Dictate features a "Smart Rewrite" capability that allows you to quickly refine 
 ### Settings
 
 Click the gear icon in the Dictate window to open the settings. Here you can:
-*   Enter your API keys for Groq, Deepgram, Cartesia, Gemini, Mistral, SambaNova, and Fireworks.
+*   Enter your API keys for Groq, Deepgram, Cartesia, Gemini, Mistral, SambaNova, Fireworks, and Inception.
 *   Select your preferred transcription service and transcription language (or leave `Multilingual`).
 *   Configure text rewrite settings:
     *   Choose rewrite mode: Grammar Correction, Professional Tone, Polite Tone, Casual Tone, or Structured & Organized
-    *   Select AI provider: Groq GPT-OSS-120B, Gemini 2.5 Flash Lite, Mistral Small, Llama-3.3-70B, or Fireworks GPT-OSS-20B (Default: Groq)
+    *   Select AI provider: Groq GPT-OSS-120B, Gemini 3.5 Flash, Gemini 3.1 Flash Lite, Mistral Small, SambaNova Llama-3.3-70B, Fireworks GPT-OSS-20B, or Mercury 2 (Default: Groq)
 *   Choose your text insertion mode (Simulated Typing via SendKeys or Clipboard paste).
 *   Toggle "Text formatted" to control normalized vs. formatted output for both providers (Groq normalization, Deepgram `smart_format`).
 
