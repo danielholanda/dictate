@@ -1,0 +1,13 @@
+{
+  "name": "dictate",
+  "version": "1.13.0",
+  "description": "A high-performance desktop dictation application for Windows built with Tauri and Rust.",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.8.0"
+  }
+}
