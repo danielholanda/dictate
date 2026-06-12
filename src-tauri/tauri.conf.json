@@ -14,7 +14,8 @@
     ],
     "resources": [
       "assets/audio/*",
-      "resources/models/*"
+      "resources/models/*",
+      "vendor/lemonade/**/*"
     ],
     "windows": {
       "webviewInstallMode": {

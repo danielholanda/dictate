@@ -1,0 +1,6 @@
+# Vendored Embeddable Lemonade runtime.
+# The lemond/lemonade binaries and installed backends (bin/) are large and are
+# provisioned via download + `POST /api/v1/install {flm,npu}`. Keep config.json
+# tracked; ignore the heavy binaries/backends.
+vendor/lemonade/*
+!vendor/lemonade/config.json

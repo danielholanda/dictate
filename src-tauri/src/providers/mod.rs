@@ -1,5 +1,6 @@
 // Batch providers (HTTP-based)
 pub mod groq;
+pub mod local;
 pub mod sambanova;
 pub mod fireworks;
 pub mod gemini;

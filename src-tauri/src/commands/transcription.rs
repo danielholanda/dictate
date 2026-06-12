@@ -1,13 +1,15 @@
 use crate::providers;
 use crate::services;
+use crate::services::lemond::LemondState;
 use crate::voice_commands::{VoiceCommands, process_voice_commands, CommandAction};
-use tauri::{AppHandle, Manager, Emitter};
+use tauri::{AppHandle, Manager, Emitter, State};
 
 /// Transcribe audio segment and insert text immediately
 /// Supports multiple providers (Groq, SambaNova) with batch audio processing
 #[tauri::command]
 pub async fn transcribe_audio_segment(
     app: AppHandle,
+    lemond: State<'_, LemondState>,
     audio_data: Vec<u8>,
     api_key: String,
     insertion_mode: String,
@@ -20,11 +22,15 @@ pub async fn transcribe_audio_segment(
     if audio_data.is_empty() {
         return Err("No audio data provided".to_string());
     }
-    
-    if api_key.trim().is_empty() {
+
+    // Route to selected provider (default: local NPU engine)
+    let service = api_service.unwrap_or_else(|| "local".to_string());
+
+    // The local engine uses the bundled lemond key, not a cloud API key.
+    if service != "local" && api_key.trim().is_empty() {
         return Err("API key is not set".to_string());
     }
-    
+
     // Normalize language: 'multilingual' or empty -> None (auto-detect)
     let normalized_lang = match language.as_deref() {
         None => None,
@@ -33,9 +39,15 @@ pub async fn transcribe_audio_segment(
         Some(code) => Some(code.to_string()),
     };
 
-    // Route to selected provider (default: Groq)
-    let service = api_service.unwrap_or_else(|| "groq".to_string());
     let result: Result<String, String> = match service.as_str() {
+        "local" => match lemond.endpoint() {
+            Some((port, key)) => {
+                providers::local::transcribe_verbose(audio_data, port, key, normalized_lang)
+                    .await
+                    .map_err(|e| e.to_string())
+            }
+            None => Err("Local engine is still starting. Please try again in a moment.".to_string()),
+        },
         "sambanova" => providers::sambanova::transcribe_verbose(audio_data, api_key, normalized_lang)
             .await
             .map_err(|e| e.to_string()),

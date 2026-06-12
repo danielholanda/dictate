@@ -194,7 +194,7 @@ fn default_keyboard_shortcuts() -> KeyboardShortcuts {
 }
 
 fn default_api_service() -> String {
-    "groq".to_string()
+    "local".to_string()
 }
 
 fn default_rewrite_provider() -> String {

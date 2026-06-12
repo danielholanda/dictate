@@ -25,6 +25,7 @@ export class TranscriptionSection {
         ]);
 
         this.providerField = new SelectField('api-service', i18n.t('transcription.model'), [
+            { value: 'local', label: 'Local (NPU) — Whisper Turbo' },
             { value: 'deepgram', label: 'Deepgram Nova 3 (Real-time)' },
             { value: 'elevenlabs', label: 'ElevenLabs Scribe v2 (Real-time)' },
             { value: 'cartesia', label: 'Cartesia Ink Whisper (Real-time)' },

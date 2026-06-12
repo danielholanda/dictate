@@ -3,6 +3,7 @@
  * Creates appropriate provider instance based on service name
  */
 
+import { LocalProvider } from './local-provider.js';
 import { GroqProvider } from './groq-provider.js';
 import { GeminiProvider } from './gemini-provider.js';
 import { MistralProvider } from './mistral-provider.js';
@@ -28,6 +29,9 @@ import { ElevenLabsProvider } from './elevenlabs-provider.js';
  */
 export function createProvider(serviceName, config) {
     switch (serviceName.toLowerCase()) {
+        case 'local':
+            return new LocalProvider(config);
+
         case 'groq':
             return new GroqProvider(config);
         
@@ -66,6 +70,7 @@ export function createProvider(serviceName, config) {
  */
 export function getAvailableProviders() {
     return [
+        'local',
         'groq',
         'gemini',
         'mistral',

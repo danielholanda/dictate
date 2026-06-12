@@ -159,6 +159,7 @@ pub fn run() {
             Some(vec![]),
         ))
         .manage(StreamingState::default())
+        .manage(services::lemond::LemondState::default())
         .manage(commands::settings::ReleaseState::default())
         .manage(QuitState(AtomicBool::new(false)))
         .manage(EnigoState(Mutex::new(Enigo::new(&EnigoSettings::default()).expect("Failed to init Enigo"))))
@@ -168,7 +169,16 @@ pub fn run() {
             // Initialize VAD session manager
             let vad_manager = vad::VadSessionManager::new(app.handle().clone());
             app.manage(vad_manager);
-            
+
+            // Start the bundled local AI engine (lemond) in the background so it
+            // doesn't block startup. Powers the default "local" NPU transcription.
+            {
+                let app_handle = app.handle().clone();
+                tauri::async_runtime::spawn(async move {
+                    services::lemond::launch(app_handle).await;
+                });
+            }
+
             // Register global shortcuts from settings
             register_shortcuts(app.handle());
 
@@ -584,6 +594,12 @@ pub fn run() {
             commands::update_transcript_overlay,
             commands::reposition_transcript_overlay,
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|app_handle, event| {
+            // Ensure the bundled lemond subprocess is killed on app exit.
+            if let tauri::RunEvent::Exit = event {
+                services::lemond::shutdown(app_handle);
+            }
+        });
 }

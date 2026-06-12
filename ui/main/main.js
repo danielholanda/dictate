@@ -283,7 +283,7 @@ async function loadSettings() {
         CARTESIA_API_KEY = settings.cartesia_api_key || '';
         ELEVENLABS_API_KEY = settings.elevenlabs_api_key || '';
         INCEPTION_API_KEY = settings.inception_api_key || '';
-        API_SERVICE = settings.api_service || 'groq';
+        API_SERVICE = settings.api_service || 'local';
         INSERTION_MODE = settings.insertion_mode || 'typing';
         LANGUAGE = (settings.transcription_language || 'multilingual');
         TEXT_FORMATTED = (settings.text_formatted !== false);  // Default true
@@ -632,6 +632,7 @@ async function startRecording() {
         
         // Get API key for selected service
         const apiKeyMap = {
+            'local': 'local',
             'groq': GROQ_API_KEY,
             'gemini': GEMINI_API_KEY,
             'mistral': MISTRAL_API_KEY,
